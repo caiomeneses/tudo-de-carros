@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_29_145303) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_29_203315) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -103,8 +103,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_29_145303) do
   create_table "technical_specs", force: :cascade do |t|
     t.decimal "acceleration_0_100", precision: 4, scale: 1
     t.decimal "approach_angle", precision: 4, scale: 1
+    t.decimal "city_consumption", precision: 4, scale: 1
     t.decimal "city_consumption_ethanol", precision: 4, scale: 1
-    t.decimal "city_consumption_gasoline", precision: 4, scale: 1
     t.datetime "created_at", null: false
     t.integer "curb_weight_kg"
     t.integer "cylinders"
@@ -121,8 +121,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_29_145303) do
     t.integer "gross_weight_kg"
     t.integer "ground_clearance_mm"
     t.integer "height_mm"
+    t.decimal "highway_consumption", precision: 4, scale: 1
     t.decimal "highway_consumption_ethanol", precision: 4, scale: 1
-    t.decimal "highway_consumption_gasoline", precision: 4, scale: 1
     t.integer "horsepower"
     t.integer "length_mm"
     t.integer "max_towing_kg"
