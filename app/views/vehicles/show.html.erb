@@ -7,6 +7,7 @@
     --border:       #222222;
     --field-border: #1f1f1f;
     --accent:       #e63946;
+    --accent-dim:   rgba(230, 57, 70, 0.08);
     --nav-link:     #444444;
     --tag-high-bg:  #3b0a0a;
     --tag-high-fg:  #e63946;
@@ -25,6 +26,7 @@
     --border:       #e2e2e0;
     --field-border: #ececea;
     --nav-link:     #999999;
+    --accent-dim:   rgba(230, 57, 70, 0.06);
     --tag-high-bg:  #fde8e8;
     --tag-high-fg:  #c1121f;
     --tag-med-bg:   #fdf3dc;
@@ -67,56 +69,58 @@
 
   /* ── Theme toggle ── */
   .theme-btn {
-    width: 34px;
-    height: 34px;
+    width: 34px; height: 34px;
     border-radius: 50%;
     background: var(--surface);
     border: 1px solid var(--border);
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     color: var(--nav-link);
-    position: relative;
-    flex-shrink: 0;
+    position: relative; flex-shrink: 0;
     transition: border-color 0.2s, color 0.2s, background 0.3s;
   }
   .theme-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-  .theme-btn svg {
-    position: absolute;
-    transition: opacity 0.25s ease, transform 0.3s ease;
-  }
-
+  .theme-btn svg { position: absolute; transition: opacity 0.25s ease, transform 0.3s ease; }
   .icon-sun  { opacity: 1; transform: rotate(0deg)   scale(1);   }
   .icon-moon { opacity: 0; transform: rotate(90deg)  scale(0.4); }
-
   [data-theme="light"] .icon-sun  { opacity: 0; transform: rotate(-90deg) scale(0.4); }
   [data-theme="light"] .icon-moon { opacity: 1; transform: rotate(0deg)   scale(1);   }
 
   /* ── Vehicle title ── */
-  .vehicle-header {
-    padding: 2rem 2rem 1.5rem;
-  }
+  .vehicle-header { padding: 2rem 2rem 0.5rem; }
   .vehicle-header h1 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-size: 1.8rem; font-weight: 700; letter-spacing: -0.02em;
   }
   .vehicle-header h1 span { color: var(--accent); }
-  .vehicle-header p {
-    color: var(--muted);
-    margin-top: 0.3rem;
-    font-size: 0.9rem;
-    transition: color 0.3s;
+  .vehicle-header p { color: var(--muted); margin-top: 0.3rem; font-size: 0.9rem; }
+
+  /* badge elétrico no título */
+  .pt-badge {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    border-radius: 999px;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
+    padding: 0.2rem 0.65rem;
+    margin-left: 0.75rem;
+    vertical-align: middle;
+    transition: background 0.3s;
   }
+  .pt-badge.bev  { background: rgba(59,130,246,0.08);  color: #3b82f6; border: 1px solid rgba(59,130,246,0.25);  }
+  .pt-badge.phev { background: rgba(34,197,94,0.08);   color: #16a34a; border: 1px solid rgba(34,197,94,0.25);   }
+  .pt-badge.reev { background: rgba(20,184,166,0.08);  color: #0d9488; border: 1px solid rgba(20,184,166,0.25);  }
+  .pt-badge.hev  { background: rgba(234,179,8,0.08);   color: #ca8a04; border: 1px solid rgba(234,179,8,0.25);   }
+  .pt-badge.ice  { background: rgba(251,146,60,0.08);  color: #ea580c; border: 1px solid rgba(251,146,60,0.25);  }
+  [data-theme="light"] .pt-badge.bev  { background: rgba(59,130,246,0.1);  }
+  [data-theme="light"] .pt-badge.phev { background: rgba(34,197,94,0.1);   }
+  [data-theme="light"] .pt-badge.reev { background: rgba(20,184,166,0.1);  }
+  [data-theme="light"] .pt-badge.hev  { background: rgba(234,179,8,0.1);   }
+  [data-theme="light"] .pt-badge.ice  { background: rgba(251,146,60,0.1);  }
 
   /* ── Cards grid ── */
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 1.5rem;
-    padding: 0 2rem 3rem;
+    padding: 1.5rem 2rem 3rem;
   }
 
   .card {
@@ -127,6 +131,12 @@
     transition: background 0.3s, border-color 0.3s;
   }
 
+  .card.ev-card { background: linear-gradient(135deg, var(--surface) 0%, rgba(0,0,0,0.02) 100%); }
+  .card.ev-card-bev  { border-color: rgba(59,130,246,0.3); }
+  .card.ev-card-phev { border-color: rgba(34,197,94,0.3);  }
+  .card.ev-card-reev { border-color: rgba(20,184,166,0.3); }
+  .card.ev-card-hev  { border-color: rgba(234,179,8,0.3);  }
+
   .card h2 {
     font-size: 0.72rem;
     text-transform: uppercase;
@@ -135,33 +145,48 @@
     margin-bottom: 1rem;
   }
 
+  .card.ev-card-bev  h2 { color: #3b82f6; }
+  .card.ev-card-phev h2 { color: #16a34a; }
+  .card.ev-card-reev h2 { color: #0d9488; }
+  .card.ev-card-hev  h2 { color: #ca8a04; }
+
+  .card-section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg);
+    margin: 1.25rem 0 0.5rem;
+    padding-left: 0.65rem;
+    border-left: 3px solid var(--accent);
+  }
+  .card-section-label:first-of-type { margin-top: 0; }
+  .ev-card-bev  .card-section-label { border-left-color: #3b82f6; }
+  .ev-card-phev .card-section-label { border-left-color: #16a34a; }
+  .ev-card-reev .card-section-label { border-left-color: #0d9488; }
+  .ev-card-hev  .card-section-label { border-left-color: #ca8a04; }
+
   .field {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.6rem 0;
+    padding: 0.55rem 0;
     border-bottom: 1px solid var(--field-border);
     gap: 1rem;
     transition: border-color 0.3s;
   }
   .field:last-child { border-bottom: none; }
 
-  .label {
-    color: var(--muted);
-    font-size: 0.85rem;
-    transition: color 0.3s;
-  }
-  .value { font-weight: 500; font-size: 0.9rem; }
+  .label { color: var(--muted); font-size: 0.85rem; }
+  .value { font-weight: 500; font-size: 0.9rem; text-align: right; }
 
-  .empty { color: var(--empty-fg); font-size: 0.9rem; transition: color 0.3s; }
+  .empty { color: var(--empty-fg); font-size: 0.9rem; }
 
   .tag {
     display: inline-block;
     padding: 0.15rem 0.55rem;
     border-radius: 999px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    flex-shrink: 0;
+    font-size: 0.72rem; font-weight: 600; flex-shrink: 0;
     transition: background 0.3s, color 0.3s;
   }
   .tag.alta  { background: var(--tag-high-bg); color: var(--tag-high-fg); }
@@ -170,28 +195,37 @@
 
   .launch-row {
     border-bottom: 1px solid var(--border) !important;
-    margin-bottom: 0.25rem;
-    padding-bottom: 0.75rem;
+    margin-bottom: 0.25rem; padding-bottom: 0.75rem;
   }
   .launch-row .label { color: var(--accent); font-size: 0.8rem; font-weight: 500; }
-  .launch-row .value { color: var(--fg); }
 
   .depr {
     display: inline-block;
     padding: 0.12rem 0.5rem;
     border-radius: 999px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    flex-shrink: 0;
+    font-size: 0.7rem; font-weight: 600; flex-shrink: 0;
     transition: background 0.3s, color 0.3s;
   }
   .depr.neg { background: var(--tag-high-bg); color: var(--tag-high-fg); }
   .depr.pos { background: var(--tag-low-bg);  color: var(--tag-low-fg);  }
+
+  /* colors swatches */
+  .color-list {
+    display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem;
+  }
+  .color-chip {
+    font-size: 0.75rem;
+    color: var(--muted);
+    background: var(--field-border);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.2rem 0.7rem;
+    transition: background 0.3s, color 0.3s;
+  }
 </style>
 
 <header class="page-header">
-  <a href="<%= vehicles_path %>" class="back-link">← Veículos</a>
-
+  <%= link_to "← Veículos", vehicles_path, class: "back-link" %>
   <button id="theme-toggle" class="theme-btn" aria-label="Alternar tema">
     <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none"
          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -206,17 +240,153 @@
 </header>
 
 <div class="vehicle-header">
-  <h1><%= @vehicle.name %> <span><%= @vehicle.version %></span></h1>
+  <h1>
+    <%= @vehicle.name %> <span><%= @vehicle.version %></span>
+    <% if @vehicle.ev_spec.present? %>
+      <% case @vehicle.ev_spec.powertrain_type
+         when "BEV"  then %><span class="pt-badge bev">⚡ BEV</span><%
+         when "PHEV" then %><span class="pt-badge phev">🔋 PHEV</span><%
+         when "REEV" then %><span class="pt-badge reev">🔋 REEV</span><%
+         when "HEV"  then %><span class="pt-badge hev">🔋 HEV</span><%
+         end %>
+    <% else %>
+      <span class="pt-badge ice">⛽ Combustão</span>
+    <% end %>
+  </h1>
   <p><%= @vehicle.brand.name %> · <%= @vehicle.year %></p>
 </div>
 
 <div class="grid">
 
-  <% if @vehicle.technical_spec.present? %>
-    <% spec = @vehicle.technical_spec %>
+  <%# ── Ficha Técnica: Performance ── %>
+  <% if (spec = @vehicle.technical_spec).present? %>
     <div class="card">
-      <h2>Ficha Técnica</h2>
-      <% { "Motor" => spec.engine, "Potência" => spec.horsepower ? "#{spec.horsepower} cv" : nil, "Torque" => spec.torque_kgfm ? "#{spec.torque_kgfm} kgfm" : nil, "Combustível" => spec.fuel_type, "Câmbio" => spec.transmission, "Tração" => spec.drivetrain, "Cidade" => spec.city_consumption ? "#{spec.city_consumption} km/l" : nil, "Estrada" => spec.highway_consumption ? "#{spec.highway_consumption} km/l" : nil, "Porta-malas" => spec.trunk_liters ? "#{spec.trunk_liters} L" : nil }.each do |label, value| %>
+      <h2>Performance</h2>
+
+      <p class="card-section-label">Motor</p>
+      <% torque_value = if spec.torque_nm && spec.torque_kgfm
+                          "#{spec.torque_nm} Nm (#{number_with_precision(spec.torque_kgfm, precision: 1)} kgfm)"
+                        elsif spec.torque_nm
+                          "#{spec.torque_nm} Nm"
+                        elsif spec.torque_kgfm
+                          "#{number_with_precision(spec.torque_kgfm, precision: 1)} kgfm"
+                        end %>
+      <% { "Motor" => spec.engine, "Combustível" => spec.fuel_type, "Cilindrada" => (spec.engine_displacement_cc ? "#{number_with_delimiter(spec.engine_displacement_cc, delimiter: ".")} cm³" : nil), "Ciclo" => spec.engine_cycle, "Cilindros" => spec.cylinders, "Válvulas" => spec.valves, "Potência" => (spec.horsepower ? "#{spec.horsepower} cv" : nil), "Torque" => torque_value, "Câmbio" => spec.transmission, "Tração" => spec.drivetrain, "Direção" => spec.steering_type }.each do |label, value| %>
+        <% next if value.blank? %>
+        <div class="field">
+          <span class="label"><%= label %></span>
+          <span class="value"><%= value %></span>
+        </div>
+      <% end %>
+
+      <p class="card-section-label">Desempenho</p>
+      <% { "Velocidade máx." => (spec.top_speed_kmh ? "#{spec.top_speed_kmh} km/h" : nil), "0 – 100 km/h" => (spec.acceleration_0_100 ? "#{number_with_precision(spec.acceleration_0_100, precision: 1)} s" : nil) }.each do |label, value| %>
+        <% next if value.blank? %>
+        <div class="field">
+          <span class="label"><%= label %></span>
+          <span class="value"><%= value %></span>
+        </div>
+      <% end %>
+
+      <% if spec.city_consumption_gasoline.present? || spec.city_consumption_ethanol.present? %>
+        <p class="card-section-label">Consumo</p>
+        <% if spec.city_consumption_gasoline.present? %>
+          <div class="field">
+            <span class="label">Gasolina — cidade / estrada</span>
+            <span class="value"><%= spec.city_consumption_gasoline %> / <%= spec.highway_consumption_gasoline %> km/l</span>
+          </div>
+        <% end %>
+        <% if spec.city_consumption_ethanol.present? %>
+          <div class="field">
+            <span class="label">Etanol — cidade / estrada</span>
+            <span class="value"><%= spec.city_consumption_ethanol %> / <%= spec.highway_consumption_ethanol %> km/l</span>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%# ── Ficha Técnica: Dimensões e Peso ── %>
+    <div class="card">
+      <h2>Dimensões e Peso</h2>
+
+      <p class="card-section-label">Carroceria</p>
+      <% trunk_value = if spec.trunk_liters && spec.trunk_liters_folded
+                         "#{spec.trunk_liters} L / #{spec.trunk_liters_folded} L (rebatido)"
+                       elsif spec.trunk_liters
+                         "#{spec.trunk_liters} L"
+                       end %>
+      <% { "Comprimento" => (spec.length_mm ? "#{number_with_delimiter(spec.length_mm, delimiter: ".")} mm" : nil), "Largura" => (spec.width_mm ? "#{number_with_delimiter(spec.width_mm, delimiter: ".")} mm" : nil), "Altura" => (spec.height_mm ? "#{number_with_delimiter(spec.height_mm, delimiter: ".")} mm" : nil), "Entre-eixos" => (spec.wheelbase_mm ? "#{number_with_delimiter(spec.wheelbase_mm, delimiter: ".")} mm" : nil), "Bitola diant. / tras." => (spec.front_track_mm && spec.rear_track_mm ? "#{spec.front_track_mm} / #{spec.rear_track_mm} mm" : nil), "Altura mín. do solo" => (spec.ground_clearance_mm ? "#{spec.ground_clearance_mm} mm" : nil), "Porta-malas" => trunk_value, "Tanque" => (spec.fuel_tank_liters ? "#{spec.fuel_tank_liters} L" : nil), "Pneus" => spec.tire_size }.each do |label, value| %>
+        <% next if value.blank? %>
+        <div class="field">
+          <span class="label"><%= label %></span>
+          <span class="value"><%= value %></span>
+        </div>
+      <% end %>
+
+      <p class="card-section-label">Peso</p>
+      <% { "Peso em ordem de marcha" => (spec.curb_weight_kg ? "#{number_with_delimiter(spec.curb_weight_kg, delimiter: ".")} kg" : nil), "Peso bruto total" => (spec.gross_weight_kg ? "#{number_with_delimiter(spec.gross_weight_kg, delimiter: ".")} kg" : nil), "Reboque máx." => (spec.max_towing_kg ? "#{number_with_delimiter(spec.max_towing_kg, delimiter: ".")} kg" : nil) }.each do |label, value| %>
+        <% next if value.blank? %>
+        <div class="field">
+          <span class="label"><%= label %></span>
+          <span class="value"><%= value %></span>
+        </div>
+      <% end %>
+
+      <% if spec.approach_angle.present? || spec.departure_angle.present? %>
+        <p class="card-section-label">Capacidade Off-road</p>
+        <% { "Ângulo de ataque" => (spec.approach_angle ? "#{number_with_precision(spec.approach_angle, precision: 1)}°" : nil), "Ângulo de saída" => (spec.departure_angle ? "#{number_with_precision(spec.departure_angle, precision: 1)}°" : nil) }.each do |label, value| %>
+          <% next if value.blank? %>
+          <div class="field">
+            <span class="label"><%= label %></span>
+            <span class="value"><%= value %></span>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%# ── Ficha Técnica: Suspensão e Freios ── %>
+    <% if spec.front_suspension.present? || spec.front_brake.present? %>
+      <div class="card">
+        <h2>Suspensão e Freios</h2>
+
+        <p class="card-section-label">Suspensão</p>
+        <% { "Dianteira" => spec.front_suspension, "Traseira" => spec.rear_suspension }.each do |label, value| %>
+          <% next if value.blank? %>
+          <div class="field">
+            <span class="label"><%= label %></span>
+            <span class="value"><%= value %></span>
+          </div>
+        <% end %>
+
+        <p class="card-section-label">Freios</p>
+        <% { "Dianteiro" => spec.front_brake, "Traseiro" => spec.rear_brake }.each do |label, value| %>
+          <% next if value.blank? %>
+          <div class="field">
+            <span class="label"><%= label %></span>
+            <span class="value"><%= value %></span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <%# ── Especificações Elétricas ── %>
+  <% if (ev = @vehicle.ev_spec).present? %>
+    <% ev_card_class = { "BEV" => "ev-card-bev", "PHEV" => "ev-card-phev", "REEV" => "ev-card-reev", "HEV" => "ev-card-hev" }[ev.powertrain_type] %>
+    <div class="card ev-card <%= ev_card_class %>">
+      <h2>Especificações Elétricas</h2>
+
+      <p class="card-section-label">Bateria</p>
+      <% { "Tipo de trem de força" => ev.powertrain_type, "Tipo de bateria" => ev.battery_type, "Capacidade" => (ev.battery_capacity_kwh ? "#{number_with_precision(ev.battery_capacity_kwh, precision: 2)} kWh" : nil), "Autonomia elétrica INMETRO" => (ev.range_km_inmetro ? "#{ev.range_km_inmetro} km" : nil), "Autonomia elétrica WLTP" => (ev.range_km_wltp ? "#{ev.range_km_wltp} km" : nil), "Autonomia total" => (ev.range_km_total ? "#{ev.range_km_total} km" : nil) }.each do |label, value| %>
+        <% next if value.blank? %>
+        <div class="field">
+          <span class="label"><%= label %></span>
+          <span class="value"><%= value %></span>
+        </div>
+      <% end %>
+
+      <p class="card-section-label">Recarga</p>
+      <% { "CA — Potência" => (ev.ac_charging_kw ? "#{ev.ac_charging_kw.to_i} kW" : nil), "CA — Conector" => ev.ac_charging_port, "CA — Tempo 0→100%" => (ev.ac_charging_time_0_100_min ? "#{ev.ac_charging_time_0_100_min} min" : nil), "CA — Tempo 30→80%" => (ev.ac_charging_time_30_80_min ? "#{ev.ac_charging_time_30_80_min} min" : nil), "CC — Potência" => (ev.dc_charging_kw ? "#{ev.dc_charging_kw.to_i} kW" : nil), "CC — Conector" => ev.dc_charging_port, "CC — Tempo 30→80%" => (ev.dc_charging_time_30_80_min ? "#{ev.dc_charging_time_30_80_min} min" : nil) }.each do |label, value| %>
         <% next if value.blank? %>
         <div class="field">
           <span class="label"><%= label %></span>
@@ -226,6 +396,7 @@
     </div>
   <% end %>
 
+  <%# ── Preço FIPE ── %>
   <% if @vehicle.fipe_prices.any? %>
     <div class="card">
       <h2>Preço FIPE</h2>
@@ -237,24 +408,50 @@
       <% end %>
       <% @vehicle.fipe_prices.order(reference_month: :desc).each do |fp| %>
         <% if @vehicle.launch_price&.positive?
-             variacao = ((fp.price - @vehicle.launch_price) / @vehicle.launch_price * 100).round(1)
-             sinal    = variacao >= 0 ? "+" : ""
-             classe   = variacao >= 0 ? "pos" : "neg"
+             variacao   = ((fp.price - @vehicle.launch_price) / @vehicle.launch_price * 100).round(1)
+             sinal      = variacao >= 0 ? "+" : ""
+             classe     = variacao >= 0 ? "pos" : "neg"
              label_depr = "#{sinal}#{number_with_precision(variacao, precision: 1, separator: ',')}%"
            end %>
         <div class="field">
           <span class="label"><%= %w[Jan Fev Mar Abr Mai Jun Jul Ago Set Out Nov Dez][fp.reference_month.month - 1] %>/<%= fp.reference_month.year %></span>
           <span style="display:flex; align-items:center; gap:0.5rem;">
             <span class="value"><%= number_to_currency(fp.price, unit: "R$", separator: ",", delimiter: ".") %></span>
-            <% if label_depr %>
-              <span class="depr <%= classe %>"><%= label_depr %></span>
-            <% end %>
+            <% if label_depr %><span class="depr <%= classe %>"><%= label_depr %></span><% end %>
           </span>
         </div>
       <% end %>
     </div>
   <% end %>
 
+  <%# ── Cores disponíveis ── %>
+  <% if @vehicle.exterior_colors.any? || @vehicle.interior_colors.any? %>
+    <div class="card">
+      <h2>Cores Disponíveis</h2>
+      <% if @vehicle.exterior_colors.any? %>
+        <div class="field" style="flex-direction: column; align-items: flex-start; gap: 0.5rem;">
+          <span class="label">Exterior</span>
+          <div class="color-list">
+            <% @vehicle.exterior_colors.each do |c| %>
+              <span class="color-chip"><%= c %></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <% if @vehicle.interior_colors.any? %>
+        <div class="field" style="flex-direction: column; align-items: flex-start; gap: 0.5rem;">
+          <span class="label">Interior</span>
+          <div class="color-list">
+            <% @vehicle.interior_colors.each do |c| %>
+              <span class="color-chip"><%= c %></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%# ── Revisões ── %>
   <% if @vehicle.maintenances.any? %>
     <div class="card">
       <h2>Revisões</h2>
@@ -267,6 +464,7 @@
     </div>
   <% end %>
 
+  <%# ── Defeitos Conhecidos ── %>
   <% if @vehicle.defects.any? %>
     <div class="card">
       <h2>Defeitos Conhecidos</h2>
@@ -279,6 +477,7 @@
     </div>
   <% end %>
 
+  <%# ── Avaliações ── %>
   <% if @vehicle.reviews.any? %>
     <div class="card">
       <h2>Avaliações</h2>
@@ -300,9 +499,7 @@
     const root   = document.documentElement;
     const btn    = document.getElementById("theme-toggle");
     const stored = localStorage.getItem("tdc-theme") || "dark";
-
     root.setAttribute("data-theme", stored);
-
     btn.addEventListener("click", function () {
       const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
