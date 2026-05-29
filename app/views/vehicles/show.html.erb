@@ -206,8 +206,9 @@
     font-size: 0.7rem; font-weight: 600; flex-shrink: 0;
     transition: background 0.3s, color 0.3s;
   }
-  .depr.neg { background: var(--tag-high-bg); color: var(--tag-high-fg); }
-  .depr.pos { background: var(--tag-low-bg);  color: var(--tag-low-fg);  }
+  .depr.neg  { background: var(--tag-high-bg); color: var(--tag-high-fg); }
+  .depr.pos  { background: var(--tag-low-bg);  color: var(--tag-low-fg);  }
+  .depr.zero { background: rgba(128,128,128,0.15); color: var(--muted); }
 
   /* colors swatches */
   .color-list {
@@ -288,12 +289,13 @@
         </div>
       <% end %>
 
-      <% if spec.city_consumption_gasoline.present? || spec.city_consumption_ethanol.present? %>
+      <% if spec.city_consumption.present? || spec.city_consumption_ethanol.present? %>
         <p class="card-section-label">Consumo</p>
-        <% if spec.city_consumption_gasoline.present? %>
+        <% if spec.city_consumption.present? %>
           <div class="field">
-            <span class="label">Gasolina — cidade / estrada</span>
-            <span class="value"><%= spec.city_consumption_gasoline %> / <%= spec.highway_consumption_gasoline %> km/l</span>
+            <% fuel_label = %w[Diesel diesel].include?(spec.fuel_type) ? "Diesel" : "Gasolina" %>
+            <span class="label"><%= fuel_label %> — cidade / estrada</span>
+            <span class="value"><%= spec.city_consumption %> / <%= spec.highway_consumption %> km/l</span>
           </div>
         <% end %>
         <% if spec.city_consumption_ethanol.present? %>
@@ -409,8 +411,8 @@
       <% @vehicle.fipe_prices.order(reference_month: :desc).each do |fp| %>
         <% if @vehicle.launch_price&.positive?
              variacao   = ((fp.price - @vehicle.launch_price) / @vehicle.launch_price * 100).round(1)
-             sinal      = variacao >= 0 ? "+" : ""
-             classe     = variacao >= 0 ? "pos" : "neg"
+             sinal      = variacao > 0 ? "+" : ""
+             classe     = variacao > 0 ? "pos" : (variacao < 0 ? "neg" : "zero")
              label_depr = "#{sinal}#{number_with_precision(variacao, precision: 1, separator: ',')}%"
            end %>
         <div class="field">
