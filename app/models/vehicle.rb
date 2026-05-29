@@ -1,6 +1,7 @@
 class Vehicle < ApplicationRecord
   belongs_to :brand
   has_one    :technical_spec, dependent: :destroy
+  has_one    :ev_spec,        dependent: :destroy
   has_many   :maintenances,   dependent: :destroy
   has_many   :defects,        dependent: :destroy
   has_many   :reviews,        dependent: :destroy
