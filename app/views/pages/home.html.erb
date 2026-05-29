@@ -67,7 +67,7 @@
     z-index: 20;
     padding: 1.5rem 2rem;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     opacity: 0;
     animation: fadein 0.5s ease 0.9s forwards;
@@ -375,6 +375,12 @@
 </style>
 
 <nav class="top-nav">
+  <button id="menu-toggle" class="menu-btn" aria-label="Abrir menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
   <div class="nav-right">
     <button id="theme-toggle" class="theme-btn" aria-label="Alternar tema">
       <%# Sol — visível no dark mode %>
@@ -388,12 +394,6 @@
            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
       </svg>
-    </button>
-
-    <button id="menu-toggle" class="menu-btn" aria-label="Abrir menu">
-      <span></span>
-      <span></span>
-      <span></span>
     </button>
   </div>
 </nav>
