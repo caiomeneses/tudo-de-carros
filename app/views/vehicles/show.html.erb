@@ -1,0 +1,312 @@
+<style>
+  :root {
+    --bg:           #0f0f0f;
+    --fg:           #ffffff;
+    --muted:        #aaaaaa;
+    --surface:      #161616;
+    --border:       #222222;
+    --field-border: #1f1f1f;
+    --accent:       #e63946;
+    --nav-link:     #444444;
+    --tag-high-bg:  #3b0a0a;
+    --tag-high-fg:  #e63946;
+    --tag-med-bg:   #2b2000;
+    --tag-med-fg:   #f4a20a;
+    --tag-low-bg:   #0a2b0a;
+    --tag-low-fg:   #4caf50;
+    --empty-fg:     #555555;
+  }
+
+  [data-theme="light"] {
+    --bg:           #f5f5f4;
+    --fg:           #111111;
+    --muted:        #888888;
+    --surface:      #ffffff;
+    --border:       #e2e2e0;
+    --field-border: #ececea;
+    --nav-link:     #999999;
+    --tag-high-bg:  #fde8e8;
+    --tag-high-fg:  #c1121f;
+    --tag-med-bg:   #fdf3dc;
+    --tag-med-fg:   #b07800;
+    --tag-low-bg:   #e8f5e8;
+    --tag-low-fg:   #2e7d32;
+    --empty-fg:     #aaaaaa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* ── Header ── */
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    transition: border-color 0.3s;
+  }
+
+  .back-link {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--nav-link);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  /* ── Theme toggle ── */
+  .theme-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--nav-link);
+    position: relative;
+    flex-shrink: 0;
+    transition: border-color 0.2s, color 0.2s, background 0.3s;
+  }
+  .theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .theme-btn svg {
+    position: absolute;
+    transition: opacity 0.25s ease, transform 0.3s ease;
+  }
+
+  .icon-sun  { opacity: 1; transform: rotate(0deg)   scale(1);   }
+  .icon-moon { opacity: 0; transform: rotate(90deg)  scale(0.4); }
+
+  [data-theme="light"] .icon-sun  { opacity: 0; transform: rotate(-90deg) scale(0.4); }
+  [data-theme="light"] .icon-moon { opacity: 1; transform: rotate(0deg)   scale(1);   }
+
+  /* ── Vehicle title ── */
+  .vehicle-header {
+    padding: 2rem 2rem 1.5rem;
+  }
+  .vehicle-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .vehicle-header h1 span { color: var(--accent); }
+  .vehicle-header p {
+    color: var(--muted);
+    margin-top: 0.3rem;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+
+  /* ── Cards grid ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+    padding: 0 2rem 3rem;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .card h2 {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--field-border);
+    gap: 1rem;
+    transition: border-color 0.3s;
+  }
+  .field:last-child { border-bottom: none; }
+
+  .label {
+    color: var(--muted);
+    font-size: 0.85rem;
+    transition: color 0.3s;
+  }
+  .value { font-weight: 500; font-size: 0.9rem; }
+
+  .empty { color: var(--empty-fg); font-size: 0.9rem; transition: color 0.3s; }
+
+  .tag {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    transition: background 0.3s, color 0.3s;
+  }
+  .tag.alta  { background: var(--tag-high-bg); color: var(--tag-high-fg); }
+  .tag.media { background: var(--tag-med-bg);  color: var(--tag-med-fg);  }
+  .tag.baixa { background: var(--tag-low-bg);  color: var(--tag-low-fg);  }
+
+  .launch-row {
+    border-bottom: 1px solid var(--border) !important;
+    margin-bottom: 0.25rem;
+    padding-bottom: 0.75rem;
+  }
+  .launch-row .label { color: var(--accent); font-size: 0.8rem; font-weight: 500; }
+  .launch-row .value { color: var(--fg); }
+
+  .depr {
+    display: inline-block;
+    padding: 0.12rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    transition: background 0.3s, color 0.3s;
+  }
+  .depr.neg { background: var(--tag-high-bg); color: var(--tag-high-fg); }
+  .depr.pos { background: var(--tag-low-bg);  color: var(--tag-low-fg);  }
+</style>
+
+<header class="page-header">
+  <a href="<%= vehicles_path %>" class="back-link">← Veículos</a>
+
+  <button id="theme-toggle" class="theme-btn" aria-label="Alternar tema">
+    <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+    <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+</header>
+
+<div class="vehicle-header">
+  <h1><%= @vehicle.name %> <span><%= @vehicle.version %></span></h1>
+  <p><%= @vehicle.brand.name %> · <%= @vehicle.year %></p>
+</div>
+
+<div class="grid">
+
+  <% if @vehicle.technical_spec.present? %>
+    <% spec = @vehicle.technical_spec %>
+    <div class="card">
+      <h2>Ficha Técnica</h2>
+      <% { "Motor" => spec.engine, "Potência" => spec.horsepower ? "#{spec.horsepower} cv" : nil, "Torque" => spec.torque_kgfm ? "#{spec.torque_kgfm} kgfm" : nil, "Combustível" => spec.fuel_type, "Câmbio" => spec.transmission, "Tração" => spec.drivetrain, "Cidade" => spec.city_consumption ? "#{spec.city_consumption} km/l" : nil, "Estrada" => spec.highway_consumption ? "#{spec.highway_consumption} km/l" : nil, "Porta-malas" => spec.trunk_liters ? "#{spec.trunk_liters} L" : nil }.each do |label, value| %>
+        <% next if value.blank? %>
+        <div class="field">
+          <span class="label"><%= label %></span>
+          <span class="value"><%= value %></span>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @vehicle.fipe_prices.any? %>
+    <div class="card">
+      <h2>Preço FIPE</h2>
+      <% if @vehicle.launch_price&.positive? %>
+        <div class="field launch-row">
+          <span class="label">Lançamento (<%= @vehicle.year %>)</span>
+          <span class="value"><%= number_to_currency(@vehicle.launch_price, unit: "R$", separator: ",", delimiter: ".") %></span>
+        </div>
+      <% end %>
+      <% @vehicle.fipe_prices.order(reference_month: :desc).each do |fp| %>
+        <% if @vehicle.launch_price&.positive?
+             variacao = ((fp.price - @vehicle.launch_price) / @vehicle.launch_price * 100).round(1)
+             sinal    = variacao >= 0 ? "+" : ""
+             classe   = variacao >= 0 ? "pos" : "neg"
+             label_depr = "#{sinal}#{number_with_precision(variacao, precision: 1, separator: ',')}%"
+           end %>
+        <div class="field">
+          <span class="label"><%= %w[Jan Fev Mar Abr Mai Jun Jul Ago Set Out Nov Dez][fp.reference_month.month - 1] %>/<%= fp.reference_month.year %></span>
+          <span style="display:flex; align-items:center; gap:0.5rem;">
+            <span class="value"><%= number_to_currency(fp.price, unit: "R$", separator: ",", delimiter: ".") %></span>
+            <% if label_depr %>
+              <span class="depr <%= classe %>"><%= label_depr %></span>
+            <% end %>
+          </span>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @vehicle.maintenances.any? %>
+    <div class="card">
+      <h2>Revisões</h2>
+      <% @vehicle.maintenances.order(:km_interval).each do |m| %>
+        <div class="field">
+          <span class="label"><%= number_with_delimiter(m.km_interval, delimiter: ".") %> km</span>
+          <span class="value"><%= number_to_currency(m.avg_cost, unit: "R$", separator: ",", delimiter: ".") %></span>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @vehicle.defects.any? %>
+    <div class="card">
+      <h2>Defeitos Conhecidos</h2>
+      <% @vehicle.defects.each do |d| %>
+        <div class="field">
+          <span class="label"><%= d.description %></span>
+          <span class="tag <%= d.frequency %>"><%= ({ "alta" => "Alta", "media" => "Média", "baixa" => "Baixa" })[d.frequency] %></span>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @vehicle.reviews.any? %>
+    <div class="card">
+      <h2>Avaliações</h2>
+      <div class="field">
+        <span class="label">Nota média</span>
+        <span class="value"><%= @vehicle.reviews.average(:rating).to_f.round(1) %> / 5</span>
+      </div>
+      <div class="field">
+        <span class="label">Total de avaliações</span>
+        <span class="value"><%= @vehicle.reviews.count %></span>
+      </div>
+    </div>
+  <% end %>
+
+</div>
+
+<script>
+  (function () {
+    const root   = document.documentElement;
+    const btn    = document.getElementById("theme-toggle");
+    const stored = localStorage.getItem("tdc-theme") || "dark";
+
+    root.setAttribute("data-theme", stored);
+
+    btn.addEventListener("click", function () {
+      const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("tdc-theme", next);
+    });
+  })();
+</script>
