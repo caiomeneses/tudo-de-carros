@@ -11,4 +11,8 @@ class Vehicle < ApplicationRecord
   validates :version, presence: true
   validates :year,    presence: true, numericality: { only_integer: true, greater_than: 1900 }
   validates :name, uniqueness: { scope: [ :brand_id, :version, :year ] }
+
+  def model_slug
+    name.parameterize
+  end
 end
