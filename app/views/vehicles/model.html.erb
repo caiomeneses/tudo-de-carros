@@ -1,0 +1,344 @@
+<style>
+  :root {
+    --bg:           #0f0f0f;
+    --fg:           #ffffff;
+    --muted:        #aaaaaa;
+    --surface:      #1a1a1a;
+    --border:       #222222;
+    --border-hover: #333333;
+    --empty-fg:     #555555;
+    --accent:       #e63946;
+    --nav-link:     #444444;
+    --card-shadow:  rgba(0,0,0,0.4);
+    --tag-high-bg:  rgba(239,68,68,0.12);
+    --tag-high-fg:  #f87171;
+    --tag-low-bg:   rgba(34,197,94,0.12);
+    --tag-low-fg:   #4ade80;
+  }
+
+  [data-theme="light"] {
+    --bg:           #f5f5f4;
+    --fg:           #111111;
+    --muted:        #888888;
+    --surface:      #ffffff;
+    --border:       #e2e2e0;
+    --border-hover: #cccccc;
+    --empty-fg:     #aaaaaa;
+    --nav-link:     #999999;
+    --card-shadow:  rgba(0,0,0,0.08);
+    --tag-high-bg:  rgba(239,68,68,0.08);
+    --tag-high-fg:  #dc2626;
+    --tag-low-bg:   rgba(34,197,94,0.08);
+    --tag-low-fg:   #16a34a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* ── Header ── */
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .back-link {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--nav-link);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  /* ── Theme toggle ── */
+  .theme-btn {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--nav-link);
+    position: relative; flex-shrink: 0;
+    transition: border-color 0.2s, color 0.2s, background 0.3s;
+  }
+  .theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .theme-btn svg { position: absolute; transition: opacity 0.25s ease, transform 0.3s ease; }
+  .icon-sun  { opacity: 1; transform: rotate(0deg)   scale(1);   }
+  .icon-moon { opacity: 0; transform: rotate(90deg)  scale(0.4); }
+  [data-theme="light"] .icon-sun  { opacity: 0; transform: rotate(-90deg) scale(0.4); }
+  [data-theme="light"] .icon-moon { opacity: 1; transform: rotate(0deg)   scale(1);   }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 2.5rem 2rem 2rem;
+  }
+  .hero-brand {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-meta {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .hero-meta strong { color: var(--fg); font-weight: 600; }
+
+  /* ── Version grid ── */
+  .versions-section {
+    padding: 0 2rem 3rem;
+  }
+
+  .version-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .version-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+    text-decoration: none;
+    color: var(--fg);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .version-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--card-shadow);
+    color: var(--fg);
+  }
+
+  .vc-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .vc-year {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .vc-version {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    margin-top: 0.2rem;
+  }
+
+  .vc-footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .fipe-block { text-align: right; }
+  .fipe-price {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .fipe-label {
+    font-size: 0.65rem;
+    color: var(--empty-fg);
+    margin-top: 0.1rem;
+  }
+
+  .fipe-depr {
+    display: inline-block;
+    padding: 0.12rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.68rem; font-weight: 600;
+    margin-top: 0.3rem;
+  }
+  .fipe-depr.neg  { background: var(--tag-high-bg); color: var(--tag-high-fg); }
+  .fipe-depr.pos  { background: var(--tag-low-bg);  color: var(--tag-low-fg);  }
+  .fipe-depr.zero { background: rgba(128,128,128,0.15); color: var(--muted); }
+
+  /* powertrain badges */
+  .pt-badge {
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+  .pt-badge.bev  { background: rgba(59,130,246,0.1);  color: #3b82f6; border: 1px solid rgba(59,130,246,0.25); }
+  .pt-badge.phev { background: rgba(34,197,94,0.1);   color: #16a34a; border: 1px solid rgba(34,197,94,0.25);  }
+  .pt-badge.reev { background: rgba(20,184,166,0.1);  color: #0d9488; border: 1px solid rgba(20,184,166,0.25); }
+  .pt-badge.hev  { background: rgba(234,179,8,0.1);   color: #ca8a04; border: 1px solid rgba(234,179,8,0.25);  }
+  .pt-badge.ice  { background: rgba(251,146,60,0.08); color: #ea580c; border: 1px solid rgba(251,146,60,0.2);  }
+
+  .spec-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .spec-chip {
+    font-size: 0.68rem;
+    color: var(--muted);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.15rem 0.45rem;
+    transition: background 0.3s, border-color 0.3s;
+  }
+</style>
+
+<header class="page-header">
+  <a href="<%= vehicles_path %>" class="back-link">← Veículos</a>
+
+  <button id="theme-toggle" class="theme-btn" aria-label="Alternar tema">
+    <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+    <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+</header>
+
+<section class="hero">
+  <div class="hero-brand"><%= @brand.name %></div>
+  <h1>Todos os <span><%= @model_name %></span></h1>
+  <p class="hero-meta">
+    <strong><%= @vehicles.size %></strong>
+    <%= @vehicles.size == 1 ? "versão disponível" : "versões disponíveis" %>
+  </p>
+</section>
+
+<section class="versions-section">
+  <div class="version-grid">
+    <% @vehicles.each do |vehicle| %>
+      <% pt_type = vehicle.ev_spec&.powertrain_type
+         fuel    = vehicle.technical_spec&.fuel_type.to_s
+         if pt_type
+           badge_class = pt_type.downcase; badge_label = pt_type
+         elsif fuel.downcase.include?("flex")
+           badge_class = "ice"; badge_label = "Flex"
+         elsif fuel.downcase.include?("gasolina")
+           badge_class = "ice"; badge_label = "Gasolina"
+         elsif fuel.downcase.include?("diesel")
+           badge_class = "ice"; badge_label = "Diesel"
+         else
+           badge_class = "ice"; badge_label = fuel.presence || "ICE"
+         end
+
+         latest_fipe = vehicle.fipe_prices.max_by(&:reference_month)
+         if latest_fipe && vehicle.launch_price&.positive?
+           variacao    = ((latest_fipe.price - vehicle.launch_price) / vehicle.launch_price * 100).round(1)
+           sinal       = variacao > 0 ? "+" : ""
+           depr_class  = variacao > 0 ? "pos" : (variacao < 0 ? "neg" : "zero")
+           depr_label  = "#{sinal}#{number_with_precision(variacao, precision: 1, separator: ',')}% vs lançamento"
+         end
+
+         ts = vehicle.technical_spec
+      %>
+      <%= link_to vehicle_path(vehicle), class: "version-card" do %>
+        <div class="vc-top">
+          <div>
+            <div class="vc-year"><%= vehicle.year %></div>
+            <div class="vc-version"><%= vehicle.version %></div>
+          </div>
+          <span class="pt-badge <%= badge_class %>"><%= badge_label %></span>
+        </div>
+
+        <% if ts %>
+          <div class="spec-chips">
+            <% if ts.engine.present? %>
+              <span class="spec-chip"><%= ts.engine %></span>
+            <% end %>
+            <% if ts.horsepower.present? %>
+              <span class="spec-chip"><%= ts.horsepower %> cv</span>
+            <% end %>
+            <% if ts.transmission.present? %>
+              <span class="spec-chip"><%= ts.transmission %></span>
+            <% end %>
+            <% if ts.drivetrain.present? %>
+              <span class="spec-chip"><%= ts.drivetrain %></span>
+            <% end %>
+          </div>
+        <% end %>
+
+        <div class="vc-footer">
+          <% if vehicle.launch_price&.positive? %>
+            <div>
+              <div style="font-size:0.7rem; color:var(--muted);">Lançamento</div>
+              <div style="font-size:0.9rem; font-weight:700;">
+                <%= number_to_currency(vehicle.launch_price, unit: "R$", separator: ",", delimiter: ".") %>
+              </div>
+            </div>
+          <% else %>
+            <div></div>
+          <% end %>
+
+          <% if latest_fipe %>
+            <div class="fipe-block">
+              <div class="fipe-price">
+                <%= number_to_currency(latest_fipe.price, unit: "R$", separator: ",", delimiter: ".") %>
+              </div>
+              <div class="fipe-label">
+                FIPE <%= %w[Jan Fev Mar Abr Mai Jun Jul Ago Set Out Nov Dez][latest_fipe.reference_month.month - 1] %>/<%= latest_fipe.reference_month.year %>
+              </div>
+              <% if depr_label %>
+                <div class="fipe-depr <%= depr_class %>"><%= depr_label %></div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</section>
+
+<script>
+  (function () {
+    const root   = document.documentElement;
+    const btn    = document.getElementById("theme-toggle");
+    const stored = localStorage.getItem("tdc-theme") || "dark";
+    root.setAttribute("data-theme", stored);
+    btn.addEventListener("click", function () {
+      const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("tdc-theme", next);
+    });
+  })();
+</script>
